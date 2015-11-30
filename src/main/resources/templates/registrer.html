@@ -1,0 +1,136 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="utf-8"></meta>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+    <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content=""></meta>
+    <meta name="author" content=""></meta>
+    <link rel="icon" href="../../favicon.ico"/>
+
+    <title>Login</title>
+
+    <!-- Bootstrap core CSS -->
+    <link th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css}" rel="stylesheet"/>
+
+    <!-- Custom styles for this template -->
+    <link th:href="@{https://getbootstrap.com/examples/navbar-fixed-top/navbar-fixed-top.css}" rel="stylesheet"/>
+
+
+    <script>
+        function doAjaxPost() {
+        // get the form values
+        var username = $('#username').val();
+            var password = $('#password').val();
+            var role = $('#role').val();
+
+
+        $.ajax({
+
+            type: "POST",
+            url: "/registrer",
+
+            data: "username=" + username + "&password=" + password + "&role=" + role,
+
+            success: function(response){
+                // we have the response
+                $('#info').html(response);
+                $('#username').val('');
+                $('#password').val('');
+                $('#role').val('');
+
+            },
+            error: function(e){
+                alert('Error: ' + e);
+            }
+        });
+    }
+    </script>
+
+
+
+</head>
+
+<body>
+
+
+<!-- Fixed navbar -->
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Photos</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li class="active"><a th:href="@{/}">Home</a></li>
+                <li sec:authorize="isAuthenticated()">
+                    <a th:href="@{/profile}"><span sec:authentication="name">Bob></span></a>
+                </li>
+
+            </ul>
+
+            <form class="navbar-form navbar-left" role="search">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Search"/>
+                </div>
+                <button type="submit" class="btn btn-default">Submit</button>
+            </form>
+
+
+
+            <ul class="nav navbar-nav navbar-right">
+                <li><a th:href="@{/registrer}">Bli medlem</a></li>
+                <li sec:authorize="isAnonymous()"><a th:href="@{/login}">Logg inn</a></li>
+                <li sec:authorize="isAuthenticated()">
+                    <a th:href="@{/logout}">Logge ut</a>
+                </li>
+                <li sec:authorize="isAuthenticated()">
+                    <a th:href="@{/upload}">Laste opp <span class="sr-only">(current)</span></a>
+                </li>
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</nav>
+
+<div class="container">
+
+    <!-- Main component for a primary marketing message or call to action -->
+
+        <h2>Brukerinfo</h2>
+    <div class="form-group">
+        <label for="username">Skriv brukernavn:</label>
+        <input type="text" class="form-control" id="username">
+        <label for="password">Skriv inn passord:</label>
+        <input type="text" class="form-control" id="password">
+        <input type="hidden" class="form-control" value="ADMIN" id="role">
+        <tr><td colspan="2"><input type="button" class="btn btn-default" value="Legge til" onclick="doAjaxPost()"><br/></td></tr>
+    </div>
+
+
+</div> <!-- /container -->
+
+
+
+
+
+
+
+
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<script src="https://getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"></script>
+</body>
+</html>

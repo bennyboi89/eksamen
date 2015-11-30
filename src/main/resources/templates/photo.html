@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="utf-8"></meta>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+    <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content=""></meta>
+    <meta name="author" content=""></meta>
+    <link rel="icon" href="../../favicon.ico"/>
+
+    <title>Hjem Galleri</title>
+
+
+    <!-- Bootstrap core CSS -->
+    <link th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css}" rel="stylesheet"/>
+
+    <!-- Custom styles for this template -->
+    <link th:href="@{https://getbootstrap.com/examples/navbar-fixed-top/navbar-fixed-top.css}" rel="stylesheet"/>
+
+
+</head>
+
+<body>
+
+<!-- Fixed navbar -->
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Photos</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li class="active"><a th:href="@{/}">Home</a></li>
+                <li sec:authorize="isAuthenticated()">
+                    <a th:href="@{/profile}"><span sec:authentication="name">Bob></span></a>
+                </li>
+
+            </ul>
+
+            <form class="navbar-form navbar-left" role="search">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Search"/>
+                </div>
+                <button type="submit" class="btn btn-default">Submit</button>
+            </form>
+
+
+
+            <ul class="nav navbar-nav navbar-right">
+                <li><a th:href="@{/registrer}">Bli medlem</a></li>
+                <li sec:authorize="isAnonymous()"><a th:href="@{/login}">Logg inn</a></li>
+                <li sec:authorize="isAuthenticated()">
+                    <a th:href="@{/logout}">Logge ut</a>
+                </li>
+                <li sec:authorize="isAuthenticated()">
+                    <a th:href="@{/upload}">Laste opp <span class="sr-only">(current)</span></a>
+                </li>
+            </ul>
+        </div>
+        <!--/.nav-collapse -->
+    </div>
+</nav>
+
+
+<!-- Page Heading -->
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">Galleri
+            <small>Oversikt</small>
+        </h1>
+    </div>
+</div>
+<!-- /.row -->
+
+<!-- Projects Row -->
+
+<div class="row">
+    <th:block th:each="foto : ${fotoList}">
+    <div class="col-sm-6 col-md-4">
+        <div class="thumbnail">
+            <img class="img-responsive" th:src = "'/photo/'+${foto.getId()}"  alt="" style="width:1280px;height:720px;" />
+            <div class="caption">
+                <h3>Thumbnail label</h3>
+                <p>loloolololol</p>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="input-group">
+    <span class="input-group-addon" id="basic-addon1">@</span>
+    <input type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1">
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+
+
+
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<script src="https://getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"></script>
+</body>
+</html>
