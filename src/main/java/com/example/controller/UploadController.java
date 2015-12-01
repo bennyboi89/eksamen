@@ -31,7 +31,7 @@ public class UploadController {
 
 
     @RequestMapping(value="/upload", method= RequestMethod.POST)
-    public @ResponseBody String handleFileUpload(@RequestParam("name") String name, @RequestParam("file") MultipartFile file){
+    public @ResponseBody String handleFileUpload(@RequestParam("name") String name, @RequestParam("file") MultipartFile file, @RequestParam("tags") String tags){
 
         if (!file.isEmpty()) {
             try {
@@ -41,6 +41,8 @@ public class UploadController {
 
                 DBObject metaData = new BasicDBObject();
                 metaData.put("username", userName);
+
+
 
 
                 byte[] bytes = file.getBytes();

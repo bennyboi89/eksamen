@@ -20,6 +20,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -78,11 +79,17 @@ public class PhotoController {
 
 
     @RequestMapping(value = "/photo/page/{iD}", method = RequestMethod.GET)
-    public String fotoId(@PathVariable String iD, Model model){
+    public String fotoId(@PathVariable String iD, ModelMap model){
 
         List<GridFSDBFile> fotoList =
                 gridFsTemplate.find(new Query(Criteria.where("_id").is(iD)));
+        List comments = mongo.findAll(Comment.class);
+
+
+        model.put("comments",comments);
         model.addAttribute("fotoList", fotoList);
+
+
 
         return "photo";
     }

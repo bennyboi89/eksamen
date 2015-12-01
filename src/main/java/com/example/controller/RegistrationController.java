@@ -35,7 +35,11 @@ public class RegistrationController {
 
 
     @RequestMapping(value = "/registrer", method = RequestMethod.POST)
-    public String saveUser(User user) {
+    public String saveUser(@Valid User user, BindingResult bindingResult)
+    {
+        if(bindingResult.hasErrors()){
+            return "error";
+        }
         mongoRepository.save(user);
         return "redirect:/index/";
     }

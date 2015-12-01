@@ -32,7 +32,7 @@
             type: "POST",
             url: "/registrer",
 
-            data: "username=" + username + "&password=" + password + "&role=" + role,
+            data: "username=" + username + "&amp;password=" + password + "&amp;role=" + role,
 
             success: function(response){
                 // we have the response
@@ -42,8 +42,8 @@
                 $('#role').val('');
 
             },
-            error: function(e){
-                alert('Error: ' + e);
+            error: function(request, status, error){
+                alert('Error: ' + request.responseText);
             }
         });
     }
@@ -77,12 +77,6 @@
 
             </ul>
 
-            <form class="navbar-form navbar-left" role="search">
-                <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Search"/>
-                </div>
-                <button type="submit" class="btn btn-default">Submit</button>
-            </form>
 
 
 
@@ -102,7 +96,6 @@
 
 <div class="container">
 
-    <!-- Main component for a primary marketing message or call to action -->
 
         <h2>Brukerinfo</h2>
     <div class="form-group">
@@ -111,7 +104,10 @@
         <label for="password">Skriv inn passord:</label>
         <input type="text" class="form-control" id="password">
         <input type="hidden" class="form-control" value="ADMIN" id="role">
-        <tr><td colspan="2"><input type="button" class="btn btn-default" value="Legge til" onclick="doAjaxPost()"><br/></td></tr>
+        <tr><td colspan="2"><input type="button" class="btn btn-default" value="Legge til" onclick="doAjaxPost()"/><br/></td></tr>
+        <div th:if="${param.error}">
+            Brukernavn allerede brukt.
+        </div>
     </div>
 
 

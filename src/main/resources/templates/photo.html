@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" ng-app="" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
     <meta charset="utf-8"></meta>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
@@ -14,6 +14,7 @@
 
     <!-- Bootstrap core CSS -->
     <link th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css}" rel="stylesheet"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.4/angular.min.js"></script>
 
     <!-- Custom styles for this template -->
     <link th:href="@{https://getbootstrap.com/examples/navbar-fixed-top/navbar-fixed-top.css}" rel="stylesheet"/>
@@ -21,7 +22,7 @@
 
 </head>
 
-<body>
+<body ng-controller="commentsCtrl">
 
 <!-- Fixed navbar -->
 <nav class="navbar navbar-default navbar-fixed-top">
@@ -46,10 +47,19 @@
 
             <form class="navbar-form navbar-left" role="search">
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Search"/>
+                    <input type="text" list="fotoes" class="form-control" placeholder="Search"/>
                 </div>
-                <button type="submit" class="btn btn-default">Submit</button>
+
             </form>
+
+            <datalist id="fotoes">
+                <th:block th:each="foto : ${fotoList}">
+                    <option th:text="${foto.getId()}"/>
+                    <option th:text="${foto.getFilename()}"/>
+                    <option th:text="${foto.getMetaData()}"/>
+
+                </th:block>
+            </datalist>
 
 
 
@@ -87,24 +97,44 @@
         <div class="thumbnail">
             <img class="img-responsive" th:src = "'/photo/'+${foto.getId()}"  alt="" style="width:1280px;height:720px;" />
             <div class="caption">
-                <h3>Thumbnail label</h3>
-                <p>loloolololol</p>
+                <h2 th:text="${foto.getUploadDate()}"></h2>
+                <h1 th:text="${foto.getFilename()}"></h1>
 
             </div>
         </div>
     </div>
+    </th:block>
 </div>
 
 
 
 
-<div class="input-group">
-    <span class="input-group-addon" id="basic-addon1">@</span>
-    <input type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1">
+<div class="commentsFrame">
+    <th:block th:each="comment : ${comments}">
+    <div>
+        <h4 th:text="${comment.getNick()}"></h4>
+        <h5 th:text="${comment.getDate()}"></h5>
+        <p th:text="${comment.getText()}"></p>
+    </div>
+    </th:block>
+
+
+
+    <!-- Angular setter inn kommentarene som blir skrevet fra nettleseren -->
+    <div ng-repeat="comment in comments">
+        <h4>{{comment.nick}}</h4>
+        <h5>{{comment.date}}</h5>
+        <p>{{comment.text}}</p>
+    </div>
 </div>
 
+<form ng-submit="addComment('comment')" name="commentForm">
+    <input class="form-control" placeholder="Brukernavn" ng-model="comment.nick"  type="text"/>
 
+    <textarea class="form-control" placeholder="Kommentar" cols="72" ng-model="comment.text"></textarea>
 
+    <input class="btn btn-default" type="submit" id="submit" value="Send" />
+</form>
 
 
 
@@ -119,7 +149,7 @@
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-
+<script type="text/javascript" th:src="@{/js/controller.js}"></script>
 
 
 

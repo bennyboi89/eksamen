@@ -22,6 +22,7 @@ public class Comment implements Serializable {
     @Id
     private String id;
 
+
     String text;
     String nick;
     String date;

@@ -2,6 +2,7 @@ package com.example;
 
 import com.example.model.User;
 import com.example.service.UserService;
+import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoException;
@@ -29,6 +30,7 @@ public class EksamenApplication implements CommandLineRunner {
     @Autowired
     UserService service;
 
+
     public static void main(String[] args) {
         SpringApplication.run(EksamenApplication.class, args);
     }
@@ -40,6 +42,10 @@ public class EksamenApplication implements CommandLineRunner {
         service.deleteAll();
         User user = new User("demo", "demo", "ADMIN");
         service.save(user);
+
+
+
+
     }
 
 /*

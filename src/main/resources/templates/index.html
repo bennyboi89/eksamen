@@ -25,6 +25,8 @@
 
 <body>
 
+
+
 <!-- Fixed navbar -->
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
@@ -48,10 +50,19 @@
 
             <form class="navbar-form navbar-left" role="search">
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Search"/>
+                    <input type="text" list="fotoes" class="form-control" placeholder="Search"/>
                 </div>
-                <button type="submit" class="btn btn-default">Submit</button>
+
             </form>
+
+            <datalist id="fotoes">
+                <th:block th:each="foto : ${fotoList}">
+                <option th:text="${foto.getId()}"/>
+                    <option th:text="${foto.getFilename()}"/>
+                    <option th:text="${foto.getMetaData()}"/>
+
+                </th:block>
+            </datalist>
 
 
 
@@ -80,6 +91,13 @@
     </div>
 </div>
 <!-- /.row -->
+
+
+
+
+
+
+
 
 <!-- Projects Row -->
 <div class="row">

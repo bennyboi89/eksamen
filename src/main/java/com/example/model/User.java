@@ -1,7 +1,10 @@
 package com.example.model;
 
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import javax.validation.constraints.NotNull;
 
 /**
  * Created by benny on 21.10.15.
@@ -11,8 +14,14 @@ public class User {
 
     @Id
     private String id;
+
+    @NotNull
+    @NotEmpty
     private String username;
+
+
     private String password;
+
     private String role;
 
 
